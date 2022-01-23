@@ -5,6 +5,9 @@ from bs4 import BeautifulSoup as bs
 
 link = 'https://nhentai.net/'
 
+anidir = 'DIR HERE'
+hendir = 'DIR HERE'
+
 client = discord.Client()
 
 help_message = '''
@@ -14,7 +17,65 @@ help_message = '''
 `?anime` - recommend random anime
 `?hentai` - recommend random hentai
 `?sauce` - generate random sauce
+`?version` - displays SauceGenBot version
 '''
+
+version = 'SauceGenBot is currently v0.6'
+
+def initial():
+    #open anime list file
+    f = open(anidir,'r+')
+    
+    #create new list
+    global anilist
+    anilist = []
+    
+    #Count how many titles
+    while True:
+        line = f.readline()
+        
+        #store titles to list
+        anilist.append(line)
+        
+        if not line:
+            break
+            
+    f.close();
+
+def animeGen():
+    anicount = 0;
+    
+    #open anime list file
+    f = open(anidir,'r+')
+    
+    #Count how many titles
+    while True:
+        anicount += 1
+        
+        line = f.readline()
+        
+        if not line:
+            break
+    
+    #close file
+    f.close()
+
+    #Generate random value
+    val = random.randint(0,anicount)
+    
+    #Generate random title based on list
+    title = anilist[val]
+    
+    #Generate MAL search link
+    #rpl = title.replace(" ","%20")
+    #search = 'https://myanimelist.net/search/anime?q=' + title.replace(' ','%20') + '&cat=anime'
+    #search1 = search.replace('\n','')
+    
+    #print(search1)
+    #r = requests.get(search1)
+    #print(r.status_code)
+    
+    return(title)
 
 def sauceGen():
     r = requests.get(link)
@@ -69,6 +130,10 @@ async def on_message(message):
       await message.channel.send('UNDER CONSTRUCTION!')
       
   if message.content.startswith('?anime'):
-      await message.channel.send('UNDER CONSTRUCTION!')    
+      await message.channel.send('Anime Recommendation: ' + animeGen())    
+  
+  if message.content.startswith('?version'):
+      await message.channel.send(version)   
 
+initial()
 client.run('TOKEN HERE')
