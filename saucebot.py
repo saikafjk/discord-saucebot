@@ -1,7 +1,5 @@
 import discord
 import os
-import json
-
 import time, requests, random
 from bs4 import BeautifulSoup as bs
 
@@ -9,12 +7,15 @@ link = 'https://nhentai.net/'
 
 client = discord.Client()
 
-def get_quote():
-  response = requests.get("https://zenquotes.io/api/random")
-  json_data = json.loads(response.text)
-  quote = json_data[0]['q'] + " -" + json_data[0]['a']
-  return(quote)
-  
+help_message = '''
+>>> SauceGenBot reacts to these commands:
+ 
+`?help` - display this message
+`?anime` - recommend random anime
+`?hentai` - recommend random hentai
+`?sauce` - generate random sauce
+'''
+
 def sauceGen():
     r = requests.get(link)
     soup = bs(r.content, 'html.parser')
@@ -48,15 +49,26 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
+  #print(str(message) + '\n');
+  
   if message.author == client.user:
     return
-
-  if message.content.startswith('$inspire'):
-    quote = get_quote()
-    await message.channel.send(quote)
-    
+        
+  if message.content.startswith('!STOP'):
+      await message.channel.send('Stopped bot.')
+      exit()
+  
+  if message.content.startswith('?help'):
+      await message.channel.send(help_message)
+  
   if message.content.startswith('?sauce'):
       saucegen = sauceGen()
       await message.channel.send(saucegen)
+      
+  if message.content.startswith('?hentai'):
+      await message.channel.send('UNDER CONSTRUCTION!')
+      
+  if message.content.startswith('?anime'):
+      await message.channel.send('UNDER CONSTRUCTION!')    
 
-client.run('TOKEN HERE')
+client.run('OTM0NDQzMzA4MDk5NDYxMTQw.YewKJQ.3fln12k8GDItI3E_wu68dOV7oQA')
