@@ -59,4 +59,4 @@ async def on_message(message):
       saucegen = sauceGen()
       await message.channel.send(saucegen)
 
-client.run('OTM0NDQzMzA4MDk5NDYxMTQw.YewKJQ.-UtRVjfpJRiIFqwuOswRiDJjT1k')
+client.run('TOKEN HERE')
