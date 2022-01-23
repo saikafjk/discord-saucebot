@@ -71,4 +71,4 @@ async def on_message(message):
   if message.content.startswith('?anime'):
       await message.channel.send('UNDER CONSTRUCTION!')    
 
-client.run('OTM0NDQzMzA4MDk5NDYxMTQw.YewKJQ.3fln12k8GDItI3E_wu68dOV7oQA')
+client.run('TOKEN HERE')
